@@ -43,6 +43,7 @@ module alu (
     output [15:0] data_out
 );
 
+
 ## Tools Used
 - **Language**: Verilog HDL
 - **Simulator**: ModelSim
