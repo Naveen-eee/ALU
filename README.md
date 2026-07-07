@@ -42,3 +42,8 @@ module alu (
     input         enb,
     output [15:0] data_out
 );
+
+## Tools Used
+- **Language**: Verilog HDL
+- **Simulator**: ModelSim
+- **FPGA Design Tool**: Quartus Prime
