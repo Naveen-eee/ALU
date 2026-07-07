@@ -41,7 +41,7 @@ module alu (
     input  [3:0]  inp_command,
     input         enb,
     output [15:0] data_out
-);```
+);
 
 
 ## Tools Used
