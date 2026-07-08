@@ -34,17 +34,20 @@ An 8-bit Arithmetic Logic Unit (ALU) implemented in Verilog with 16 different op
 
 ## Module Interface
 
+## Module Interface
+
 ```verilog
 module alu (
-    input  [7:0]  a,
-    input  [7:0]  b,
-    input  [3:0]  inp_command,
-    input         enb,
+    input [7:0] a,
+    input [7:0] b,
+    input [3:0] inp_command,
+    input enb,
     output [15:0] data_out
-);```
-
+);
+```
 
 ## Tools Used
-- **Language**: Verilog HDL
-- **Simulator**: ModelSim
-- **FPGA Design Tool**: Quartus Prime
+
+- **Language:** Verilog HDL
+- **Simulator:** ModelSim
+- **FPGA Design Tool:** Quartus Prime
