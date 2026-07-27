@@ -1,8 +1,8 @@
 module alu (
-    input [7:0] a,b, // 8 bit operands
+    input [5:0] a,b, // 6 bit operands
     input [3:0] inp_command, // operation select input
     input enb, // output enable signal
-    output [15:0] data_out,  //16 bit alu output
+    output [11:0] data_out,  //16 bit alu output
     output zero_flag,  // High when ALU output is zero
     output carry_flag  // carry/borrow flag
 );
@@ -26,41 +26,41 @@ parameter ADD  = 4'b0000, //Addition: a+b
           XNOR = 4'b1110, //Bitwise XNOR
           BUF  = 4'b1111; // Buffer(pass-through a)
 
-    reg [15:0] out; //Internal register
+    reg [11:0] out; //Internal register
     reg carry;  //Internal register
 
     always @(*) begin
         carry = 1'b0;  // Default: no carry
-        out = 16'b0;  //Default : zero output
+        out = 12'b0;  //Default : zero output
         
         case(inp_command)
             ADD  : begin
                 out = a + b;
-                carry = (a + b) > 255 ? 1'b1 : 1'b0;  // Carry if result > 8-bit
+                carry = (a + b) > 63 ? 1'b1 : 1'b0;  // Carry if result > 6-bit
             end
             INC  : begin
-                out = a + 8'd1;
-                carry = (a + 8'd1) > 255 ? 1'b1 : 1'b0; // Carry if result > 8-bit
+                out = a + 6'd1;
+                carry = (a + 6'd1) > 63 ? 1'b1 : 1'b0; // Carry if result > 6-bit
             end
             SUB  : begin
                 out = a - b;
                 carry = (a < b) ? 1'b1 : 1'b0;  // Borrow flag (carry for subtraction) , UNSIGNED
             end
             DEC  : begin
-                out = a - 8'd1;
-                carry = (a < 8'd1) ? 1'b1 : 1'b0;  //Carry/Borrow occurs when decrementing 0
+                out = a - 6'd1;
+                carry = (a < 6'd1) ? 1'b1 : 1'b0;  //Carry/Borrow occurs when decrementing 0
             end
             MUL  : begin
                 out = a * b;
-                carry = (a * b) > 255 ? 1'b1 : 1'b0;
+                carry = (a * b) > 63 ? 1'b1 : 1'b0;
             end
             DIV  : begin
-                out = (b != 0) ? a / b : 16'd0; //Return 0 if divisor is zero
+                out = (b != 0) ? a / b : 12'd0; //Return 0 if divisor is zero
                 carry = 1'b0;  
             end
             SHL  : begin
                 out = a << 1;
-                carry = a[7];  // MSB becomes carry
+                carry = a[5];  // MSB becomes carry
             end
             SHR  : begin
                 out = a >> 1;
@@ -74,17 +74,17 @@ parameter ADD  = 4'b0000, //Addition: a+b
             XOR  : out = a ^ b;
             XNOR : out = a ~^ b;
             BUF  : out = a;  // Pass input A directly to the output
-            default : out = 16'd0;
+            default : out = 12'd0;
         endcase
     end
 
     // Zero flag: Set to 1 if output is 0
-    assign zero_flag = (out == 16'd0) ? 1'b1 : 1'b0;
+    assign zero_flag = (out == 12'd0) ? 1'b1 : 1'b0;
     
     // Carry flag output
     assign carry_flag = carry;
     
    // Drive output when enabled; otherwise place bus in high-impedance state
-    assign data_out = enb ? out : 16'hzzzz;
+    assign data_out = enb ? out : 12'd0;
 
 endmodule
