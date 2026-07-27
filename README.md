@@ -164,5 +164,5 @@ B.E. Electrical and Electronics Engineering
 Interested in FPGA | RTL Design | VLSI | Embedded Systems
 
 - **Language:** Verilog HDL
-- **Simulator:** ModelSim
-- **FPGA Design Tool:** Quartus Prime
+- **Simulator:** Vivado
+- **FPGA Design Tool:** Vivado
